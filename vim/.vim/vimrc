@@ -1,0 +1,191 @@
+
+" Set Vim Options: {{{1
+set nocompatible
+
+syntax on
+" Mostly so that alt-key combinations can be used as the
+" terminal sends them as <esc>key, so low timeout results
+" in <esc> and then key being read as separate keys
+set ttimeout ttimeoutlen=50
+set encoding=UTF-8
+set background=dark
+set number
+set relativenumber
+set splitbelow
+set splitright
+set hidden
+set showcmd
+set showmatch
+set wildmenu
+set incsearch
+" Highlights all previous search matches
+" Use :nohlsearch or :noh to stop showing them
+set hlsearch
+set ignorecase
+set smartcase
+set smarttab
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+set expandtab
+set autoindent
+set smartindent
+set laststatus=2
+set mouse=a
+set clipboard=unnamedplus
+set belloff=all
+" as much as possible of the last line in a window will be
+" displayed. (useful when wrap is enabled for long lines)
+set display+=lastline
+set termguicolors
+set undofile
+set undodir=~/.cache/vim/undo
+set pumheight=10
+" Syntax Based completion via <C-x><C-u>
+set completefunc=syntaxcomplete#Complete
+set shortmess-=S
+set rtp+=~/tools/fzf
+
+filetype plugin indent on
+
+" Options for markdown files
+let g:markdown_fenced_languages = ['c', 'cpp', 'java', 'go', 'python',
+            \'bash=sh', 'javascript', 'js=javascript', 'php', 'vim']
+let g:markdown_folding = 1
+
+packadd! matchit
+runtime! ftplugin/man.vim
+
+
+" Functions And Commands: {{{1
+
+let s:tmux_map = {
+            \   'h': 'L',
+            \   'l': 'R',
+            \   'k': 'U',
+            \   'j': 'D'
+            \}
+
+function! s:tmux_helper(direction) abort
+    if exists("$TMUX")
+        let l:curr = winnr()
+        let l:dir = winnr(a:direction)
+        if l:curr == l:dir
+            let l:command = "tmux select-pane -" . get(s:tmux_map, a:direction)
+            call system(l:command)
+            return
+        endif
+    endif
+    execute 'wincmd ' . a:direction
+endfunction
+
+command! Config edit $MYVIMRC
+
+" Key Mappings: {{{1
+
+" Get highlight group for the one under the cursor
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+" might need to disable terminal-emulator's mapping for this to work
+nnoremap <M-a> ggVG
+" Select previously pasted text
+nnoremap <Leader>v `[v`]
+noremap Y y$
+noremap c "_c
+nnoremap cc "_cc
+" Change word under cursor, use . to keep repeat replacing
+" that word, n to skip over some match
+nnoremap c* *N"_cgn
+vnoremap <BS> "_d
+" Copy all search matches in selected area into register a
+vnoremap <Leader>a :%s//\=setreg('A', submatch(0), 'V')/gn
+cnoremap <C-a> \=setreg('A', submatch(0), 'V')/gn
+nnoremap <M-q> :bprevious <bar> bdelete #<CR>
+nnoremap <silent> <Leader>rn :set norelativenumber!<CR>
+nnoremap <silent> <Leader>n :nohlsearch<CR>
+nnoremap <C-n> <C-i>
+
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Move selection of lines up or down
+vnoremap <C-j> :move '>+1<CR>gv
+vnoremap <C-k> :move '<-2<CR>gv
+
+nnoremap <C-p> :FZF<CR>
+
+
+" Move around splits in both vim and tmux
+for key in keys(s:tmux_map)
+    execute printf("nnoremap <silent> <M-%s> :call <SID>tmux_helper('%s')<CR>", key, key)
+    execute printf("tnoremap <silent> <M-%s> <C-\><C-N>:call <SID>tmux_helper('%s')<CR>", key, key)
+endfor
+
+
+" Cursor Shapes: {{{1
+" For cursor shapes in various modes
+let &t_SI .= "\e[5 q" " Insert Mode  => Vertical line
+let &t_SR .= "\e[1 q" " Replace Mode => Solid Block
+let &t_EI .= "\e[1 q" " Normal Mode  => Solid Block
+
+" Auto Commands: {{{1
+
+augroup myAutocmds
+
+    autocmd!
+    " So that the '+' clipboard does not lose contents as vim clears all
+    " registers on exit
+    autocmd VimLeave * call system('echo -n ' . shellescape(getreg('+')) . ' | xclip -sel clip')
+    " So that line number don't show in terminal normal modes
+    " since they make it look weird
+    autocmd TerminalOpen * setlocal nonumber norelativenumber
+
+    autocmd Filetype * if &omnifunc == ""
+                \ | setlocal omnifunc=syntaxcomplete#Complete
+                \| endif
+
+    " Cursor shapes on startup and exit
+    autocmd VimEnter * silent! !echo -ne "\e[1 q"
+    autocmd VimLeave * silent! !echo -ne "\e[5 q"
+
+augroup END
+
+" Syntax Highlighting:{{{1
+
+" In termguicolors, make some things better looking
+" (by default, poor visibility)
+highlight Pmenu guifg=black
+highlight PmenuSel guifg=black
+highlight TabLine guifg=black
+highlight Folded guibg=Grey42
+highlight Visual guibg=Grey42
+
+
+" Terminal And Gui Specific Settings: {{{1
+if !has("gui_running")
+    " Allows us to use alt-q in terminal vim as well
+    execute "set <M-q>=\eq"
+    execute "set <M-a>=\ea"
+    execute "set <M-h>=\eh"
+    execute "set <M-j>=\ej"
+    execute "set <M-k>=\ek"
+    execute "set <M-l>=\el"
+    " mouse support in tmux
+    set ttymouse=xterm2
+    set t_ut=
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+else
+    set guifont=Ubuntu\ Mono\ 14
+    colorscheme molokai
+    inoremap <C-v> <C-R>+
+    " behave mswin?
+    " so $VIMRUNTIME/mswin.vim
+endif
+
+" Modeline: {{{1
+" This is called a modeline, it indicates
+" vim properties for a specific file
+" vim:ts=4:sw=4:ai:foldmethod=marker:foldlevel=0
