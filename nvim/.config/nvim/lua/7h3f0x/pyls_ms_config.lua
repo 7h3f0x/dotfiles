@@ -3,8 +3,8 @@ if not pcall(require, "lspconfig") then
     return
 end
 
-local configs = require('lspconfig/configs')
-local util = require('lspconfig/util')
+local configs = require('lspconfig.configs')
+local util = require('lspconfig').util
 
 local name = 'pyls_ms'
 

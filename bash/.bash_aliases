@@ -64,24 +64,3 @@ soocat() {
     socat tcp-l:${2},fork,reuseaddr EXEC:${1}
 }
 
-
-# Exports
-export BAT_THEME=TwoDark
-export BAT_PAGER="less -RF"
-if command -v rg &> /dev/null; then
-    export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden -L -g "!{.git}"'
-else
-    export FZF_DEFAULT_COMMAND='find . -type f'
-fi
-export FZF_DEFAULT_OPTS='--color dark,hl:166,hl+:166 --bind=ctrl-j:preview-down,ctrl-k:preview-up,ctrl-g:first,ctrl-a:select-all,ctrl-d:deselect-all'
-export EXA_COLORS="da=38;5;36"
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
-export EDITOR=nvim
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# autoload -U +X bashcompinit && bashcompinit
-# source $HOME/.local/etc/bash_completion.d/youtube-dl.bash-completion
-

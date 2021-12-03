@@ -196,8 +196,15 @@ if [[ -f "$ZSH_HIGHLIGHTING_FILE" ]]; then
     ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]="fg=cyan"
 fi
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -f ~/.zsh_aliases ]; then
+    . ~/.zsh_aliases
 fi
+
+[ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# autoload -U +X bashcompinit && bashcompinit
+# source $HOME/.local/etc/bash_completion.d/youtube-dl.bash-completion
 
 alias luamake=/home/thefox/tools/lua-language-server/3rd/luamake/luamake

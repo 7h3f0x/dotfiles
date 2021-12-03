@@ -12,11 +12,28 @@ vim.fn.sign_define("rename_prefix", {
     texthl = "RenameSign"
 })
 
+local log_levels = vim.log.levels
+
 function M.rename()
-    if #vim.lsp.buf_get_clients(0) == 0 then
-        vim.api.nvim_err_writeln("No lsp clients attached to current buffer")
+    local clients = vim.lsp.buf_get_clients(0)
+    if #clients == 0 then
+        vim.notify("No lsp clients attached to current buffer", log_levels.ERROR)
         return
     end
+
+    local can_rename = false
+    for _, client in ipairs(clients) do
+        if client.resolved_capabilities.rename then
+            can_rename = true
+            break
+        end
+    end
+
+    if not can_rename then
+        vim.notify("No client attached to this buffer has the rename capability", log_levels.ERROR)
+        return
+    end
+
     local word = vim.fn.expand("<cword>")
 
     local buf_id = vim.api.nvim_create_buf(false, true)

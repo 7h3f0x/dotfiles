@@ -3,27 +3,69 @@ if not pcall(require, "luasnip") then
     return
 end
 
-require("luasnip.loaders.from_vscode").lazy_load()
-
 local ls = require("luasnip")
 local s = ls.snippet
 local t = ls.text_node
 local i = ls.insert_node
+local rep = require("luasnip.extras").rep
+local fmt = require("luasnip.extras.fmt").fmt
 
 ls.snippets = {
     c = {
-        s({ trig = "mainv", name = "mainv",
+        s({trig = "mainv", name = "mainv",
             dscr = "Standard C main function with no command-line arguments"}, {
-            t({"int main(void){", ""}),
+            t({"int main(void) {", ""}),
             t("\t"), i(1, "// your code"),
             t({"", "\treturn 0;", "}"})
-        })
+        }),
+        s({trig = "main", name = "main",
+            dscr = "Standard C main function with cli args"},
+            fmt([[
+                int main(int argc, char* argv[]) {{
+                    {}
+                    return 0;
+                }}
+            ]], { i(1) })
+        ),
+        s({trig = "inc", name = "include", dscr = "include a header"},
+            fmt('#include <{}>', { i(1) })
+        )
     },
+    cpp = {
+        s({trig = "fori", name = "iterator for loop",
+            dscr = "for loop using iterators"},
+            fmt([[
+                for (auto {} = {}.begin(); {it} != {container}.end(); ++{it}) {{
+                    {}
+                }}
+            ]], {
+                i(1, "it"),
+                i(2, "container"),
+                i(3),
+                it = rep(1),
+                container = rep(2)
+            })
+        ),
+        s({trig = "cout", name = "cout-endl combo",
+            dscr = "cout with respective endl as well"},
+            fmt("std::cout << {} << std::endl;", { i(1) })
+        )
+    },
+    lua = {
+        s({ trig = "req", name = "require", dscr = "require a module" },
+            -- https://github.com/L3MON4D3/LuaSnip/blob/6e10a30178240182781955ce062618c8d793a37b/Examples/snippets.lua#L374
+            fmt('require("{}")', { i(1) })
+        )
+    }
 }
 
 -- have to do this due to compe
 -- should use `ls.filetype_extend("cpp", {"c"})` once I get to cmp
-ls.snippets.cpp = ls.snippets.c
+vim.list_extend(ls.snippets.cpp, ls.snippets.c)
+
+ls.config.set_config({
+    updateevents = "TextChanged,TextChangedI",
+})
 
 local function map(mode, lhs, rhs)
     vim.api.nvim_set_keymap(mode, lhs, rhs, { expr = true })

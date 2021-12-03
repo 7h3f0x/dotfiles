@@ -8,10 +8,7 @@ local opts = {
     silent = true
 }
 
---- @module 'lsp_signature'
-local has_lsp_signature, lsp_signature = pcall(require, "lsp_signature")
-
-if not has_lsp_signature then
+function M.signature_attach(bufnr)
     vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
         vim.lsp.handlers.signature_help, {
             border = "rounded",
@@ -19,24 +16,8 @@ if not has_lsp_signature then
             max_width = 80,
         }
     )
-end
 
-function M.signature_attach(bufnr)
-    if has_lsp_signature then
-        lsp_signature.on_attach({
-            bind = true,
-            handler_opts = {
-                border = "rounded"
-            },
-            doc_lines = 2,
-            floating_window_above_cur_line = true,
-            hi_parameter = "IncSearch",
-            zindex = 50,
-            toggle_key = '<M-k>'
-        }, bufnr)
-    else
-        vim.api.nvim_buf_set_keymap(bufnr, 'i', '<M-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    end
+    vim.api.nvim_buf_set_keymap(bufnr, 'i', '<M-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 end
 
 function M.keymaps_attach(bufnr)
@@ -111,7 +92,7 @@ function M.diagnostic_setup()
         })
     else
         local on_publish_diagnostics = vim.lsp.handlers["textDocument/publishDiagnostics"]
-         vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+        vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
             on_publish_diagnostics, {
                 virtual_text = {
                     -- more space

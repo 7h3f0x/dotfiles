@@ -11,7 +11,7 @@ if executable("markdown2html")
                 \ )
 endif
 
-command! -nargs=+ -complete=command Cmd call th3f0x#commands#messages_helper(<q-args>)
+command! -nargs=* -complete=command Cmd call th3f0x#commands#messages_helper(<q-args>)
 
 command! Messages Cmd messages
 

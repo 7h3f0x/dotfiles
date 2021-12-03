@@ -19,8 +19,6 @@ if !exists("g:vscode")
     Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/nvim-compe'
     Plug 'L3MON4D3/LuaSnip'
-    Plug 'rafamadriz/friendly-snippets'
-    Plug 'ray-x/lsp_signature.nvim'
     Plug 'nvim-lua/lsp-status.nvim'
     Plug 'onsails/lspkind-nvim'
 

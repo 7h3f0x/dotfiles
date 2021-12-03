@@ -26,13 +26,15 @@ local function on_attach(client, bufnr)
     my_lsp.options_attach(client, bufnr)
     my_lsp.document_highlight_attach(client)
 
-    lsp_status.on_attach(client)
+    if has_lsp_status then
+        lsp_status.on_attach(client)
+    end
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 if pcall(require, 'compe') then
-    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.completion.completionItem.snippetSupport = pcall(require, "luasnip")
     capabilities.textDocument.completion.completionItem.resolveSupport = {
         properties = {
             'documentation',

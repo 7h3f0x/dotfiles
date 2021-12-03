@@ -42,6 +42,8 @@ set showtabline=2
 
 set noequalalways
 
+set completeopt-=preview
+
 set completefunc=syntaxcomplete#Complete
 
 set scrolloff=12

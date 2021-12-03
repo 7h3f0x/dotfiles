@@ -1,9 +1,12 @@
 function! th3f0x#commands#messages_helper(command) abort
     let l:tmpfile = tempname()
     execute "redir > " . l:tmpfile
-    silent! execute a:command
+    if a:command != ""
+        silent! execute a:command
+    endif
     redir END
     execute float2nr(floor(&lines * 0.3)) . "split " . l:tmpfile
+    setlocal bufhidden=wipe
 endfunction
 
 function! th3f0x#commands#transparent_helper(restore) abort

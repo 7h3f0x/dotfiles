@@ -5,7 +5,13 @@ if not ok then
     return
 end
 
-autopairs.setup({})
+autopairs.setup({
+    -- only do auto-pairs thing if next char is a 'space character'
+    -- or end of a pair combo
+    ignored_next_char = "[^%)%}%]%>%,%s]",
+    -- ignored_next_char = "%S",
+    disable_in_macro = true,
+})
 
 function _ToggleAutoPairs()
     if autopairs.state.disabled then

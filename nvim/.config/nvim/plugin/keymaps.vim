@@ -69,9 +69,11 @@ nnoremap <C-Down>  <cmd>resize -1<CR>
 nnoremap <C-Left>  <cmd>vertical resize -1<CR>
 nnoremap <C-Right> <cmd>vertical resize +1<CR>
 
-nnoremap y "+y
-nnoremap Y "+y$
-xnoremap y "+y
+" If I mention register explicitly (to somthing other than "), copy to that
+" register, else copy to clipboard
+nnoremap <silent><expr> y  v:register == '"' ? '"+y' : 'y'
+nnoremap <silent><expr> Y  v:register == '"' ? '"+y$' : 'y$'
+xnoremap <silent><expr> y  v:register == '"' ? '"+y' : 'y'
 
 nnoremap <Leader>p "+p
 nnoremap <Leader>P "+P

@@ -2,6 +2,11 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# like in zsh, exports available even in shell scripts
+if [ -f ~/.bashenv ]; then
+    source ~/.bashenv
+fi
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -125,3 +130,13 @@ fi
 
 bind "\C-f":"reverse-search-history"
 [ -f ~/tools/fzf/shell/key-bindings.bash ] && source ~/tools/fzf/shell/key-bindings.bash
+
+# Restore i-beam cursor before each prompt
+PROMPT_COMMAND="echo -ne '\e[5 q'"
+
+[ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# source $HOME/.local/etc/bash_completion.d/youtube-dl.bash-completion
+
