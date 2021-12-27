@@ -33,15 +33,9 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-if pcall(require, 'compe') then
-    capabilities.textDocument.completion.completionItem.snippetSupport = pcall(require, "luasnip")
-    capabilities.textDocument.completion.completionItem.resolveSupport = {
-        properties = {
-            'documentation',
-            'detail',
-            'additionalTextEdits',
-        }
-    }
+local has_cmp_lsp, cmp_lsp = pcall(require, "cmp_nvim_lsp")
+if has_cmp_lsp then
+    capabilities = cmp_lsp.update_capabilities(capabilities)
 end
 
 if has_lsp_status then
@@ -145,7 +139,7 @@ if has_lsp_status then
     config_overrides.pyls_ms.handlers = vim.tbl_extend(
         "keep",
         config_overrides.pyls_ms.handlers or {},
-        lsp_status.extensions.pyls_ms.setup()
+        require("7h3f0x.lsp-status.extensions.pyls_ms").setup()
     )
 end
 

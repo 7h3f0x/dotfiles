@@ -4,6 +4,10 @@ end
 
 local lsp_status = require("lsp-status")
 
+for key, val in pairs(require("7h3f0x.lsp-status.extensions.pyls_ms")) do
+    lsp_status.extensions.pyls_ms[key] = val
+end
+
 lsp_status.register_progress()
 
 local function select_symbol(cursor_pos, symbol)

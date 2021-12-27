@@ -25,6 +25,7 @@ require("indent_blankline").setup({
     -- Highlight current indent group, using TreeSitter
     show_current_context = true,
     show_current_context_start = true,
+    show_current_context_start_on_current_line = false,
     -- TreeSitter capture groups to use for highlighting current context
     context_patterns = context_patterns,
     buftype_exclude = {

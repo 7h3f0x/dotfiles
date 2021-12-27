@@ -29,6 +29,19 @@ ls.snippets = {
         ),
         s({trig = "inc", name = "include", dscr = "include a header"},
             fmt('#include <{}>', { i(1) })
+        ),
+        s({trig = "for", name = "for", dscr = "regular numeric for-loop"},
+            fmt([[
+                for ({} {} = 0; {i} < {}; ++{i}) {{
+                    {}
+                }}
+            ]], {
+                i(1, "int"),
+                i(2, "i"),
+                i(3, "N"),
+                i(4),
+                i = rep(2)
+            })
         )
     },
     cpp = {
@@ -59,9 +72,7 @@ ls.snippets = {
     }
 }
 
--- have to do this due to compe
--- should use `ls.filetype_extend("cpp", {"c"})` once I get to cmp
-vim.list_extend(ls.snippets.cpp, ls.snippets.c)
+ls.filetype_extend("cpp", {"c"})
 
 ls.config.set_config({
     updateevents = "TextChanged,TextChangedI",

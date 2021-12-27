@@ -116,7 +116,6 @@ lualine.setup({
             },
             {
                 "diagnostics",
-                sources = { "nvim_lsp" },
                 update_in_insert = false
             },
         },

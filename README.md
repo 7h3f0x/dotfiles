@@ -37,6 +37,14 @@ git submodule init
 git submodule update
 ```
 
+- Since stow ignores gitignore and cvsignore files if it's own ignore file is
+  not present, it will not stow that file for the `git` package. To get rid of
+  this issues, just create an empty ignore file for stow:
+
+```sh
+touch ~/.stow-global-ignore
+```
+
 - Finally, run the install script
 
 ```sh

@@ -17,8 +17,11 @@ if !exists("g:vscode")
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
     Plug 'neovim/nvim-lspconfig'
-    Plug 'hrsh7th/nvim-compe'
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-buffer'
     Plug 'L3MON4D3/LuaSnip'
+    Plug 'saadparwaiz1/cmp_luasnip'
     Plug 'nvim-lua/lsp-status.nvim'
     Plug 'onsails/lspkind-nvim'
 
@@ -39,6 +42,7 @@ if !exists("g:vscode")
     Plug 'tpope/vim-commentary'
 
     Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
+    Plug 'lewis6991/impatient.nvim'
 
 endif
 Plug 'tpope/vim-surround'
@@ -48,7 +52,10 @@ call plug#end()
 
 " 1}}}
 
-let g:cursorhold_updatetime = 1000
+if !exists("g:vscode")
+    lua require('impatient')
+    let g:cursorhold_updatetime = 1000
+endif
 
 " vim:foldmethod=marker
 

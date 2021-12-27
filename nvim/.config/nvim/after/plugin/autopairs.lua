@@ -25,3 +25,9 @@ end
 
 vim.api.nvim_set_keymap('n', '<M-p>', '<cmd>lua _ToggleAutoPairs()<CR>', { noremap = true })
 
+local has_cmp, cmp = pcall(require, "cmp")
+if has_cmp then
+    local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+    cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
+end
+
