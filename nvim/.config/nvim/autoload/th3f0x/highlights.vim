@@ -42,5 +42,9 @@ function! th3f0x#highlights#highlight_onedark() abort
     highlight Comment gui=NONE
     highlight InactiveWin guibg=#2c323d ctermbg=238
 
+    highlight! link CmpItemMenu type
+    highlight! CmpItemAbbrMatch      ctermfg=215 guifg=#FFAF5F gui=bold cterm=bold
+    highlight! CmpItemAbbrMatchFuzzy ctermfg=215 guifg=#FFAF5F gui=bold cterm=bold
+
 endfunction
 

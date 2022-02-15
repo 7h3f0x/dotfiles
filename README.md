@@ -67,13 +67,54 @@ git submodule update --remote
 
 ### Basic Glyphs
 
-For some of them:
+Methods available:
+
+- For some of them:
 
 ```sh
 sudo apt install fonts-powerline fonts-font-awesome
 ```
 
-or install a nerd font (preferred) from [here](https://github.com/ryanoasis/nerd-fonts/)
+- Install a nerd font (preferred) from [here](https://github.com/ryanoasis/nerd-fonts/)
+
+E.g., for Ubuntu Mono:
+
+```sh
+mkdir -p ~/.local/share/fonts/UbuntuMono
+cd ~/.local/share/fonts/UbuntuMono
+wget "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete.ttf"
+wget "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/UbuntuMono/Regular-Italic/complete/Ubuntu%20Mono%20Italic%20Nerd%20Font%20Complete.ttf"
+wget "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/UbuntuMono/Bold/complete/Ubuntu%20Mono%20Bold%20Nerd%20Font%20Complete.ttf"
+wget "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/UbuntuMono/Bold-Italic/complete/Ubuntu%20Mono%20Bold%20Italic%20Nerd%20Font%20Complete.ttf"
+```
+
+- Use fontconfig to prepend nerd icons
+
+```sh
+mkdir -p ~/.local/share/fonts/
+cd ~/.local/share/fonts/
+wget "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/NerdFontsSymbolsOnly/complete/Symbols-2048-em%20Nerd%20Font%20Complete.ttf"
+
+mkdir -p ~/.config/fontconfig
+cd ~/.config/fontconfig
+
+cat << EOF > fonts.conf
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+    <match>
+        <test qual="any" name="family">
+            <string>Ubuntu Mono</string>
+            <!-- other fonts here -->
+        </test>
+        <edit name="family" mode="prepend" binding="strong">
+            <string>Symbols Nerd Font</string>
+        </edit>
+    </match>
+</fontconfig>
+EOF
+fc-cache -fv
+```
 
 ### Install programs
 

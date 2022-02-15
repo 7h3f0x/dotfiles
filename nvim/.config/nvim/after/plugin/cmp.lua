@@ -7,6 +7,9 @@ end
 --- @module "lspkind"
 local has_lspkind, lspkind = pcall(require, "lspkind")
 
+--- @module "luasnip"
+local has_luasnip, luasnip = pcall(require, "luasnip")
+
 -- Options:
 
 vim.opt.shortmess:append("c")
@@ -27,8 +30,9 @@ cmp.setup({
 
     snippet = {
         expand = function(args)
-            -- snippet plugin is not optional xD
-            require("luasnip").lsp_expand(args.body)
+            if has_luasnip then
+               luasnip.lsp_expand(args.body)
+            end
         end
     },
 
@@ -79,10 +83,4 @@ cmp.setup.cmdline('/', {
         { name = 'buffer' },
     },
 })
-
--- Highlights
-
-vim.cmd([[
-    highlight! link CmpItemMenu type
-]])
 

@@ -64,3 +64,10 @@ soocat() {
     socat tcp-l:${2},fork,reuseaddr EXEC:${1}
 }
 
+load_nvm() {
+    [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+}
+
+

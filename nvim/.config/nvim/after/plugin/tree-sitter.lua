@@ -3,6 +3,9 @@ if not pcall(require, 'nvim-treesitter.configs') then
 end
 
 require('nvim-treesitter.configs').setup({
+    ensure_installed = {
+        "vim", "lua", "c", "cpp", "python", "query", "bash", "comment", "regex", "rst"
+    },
     highlight = {
         enable = true,
         disable = { "vim" }
@@ -81,7 +84,6 @@ require('nvim-treesitter.configs').setup({
 local hlmap = vim.treesitter.highlighter.hl_map
 hlmap["bash_option"] = "TSOption"
 
--- if pcall(require, "nvim-treesitter-playground") then
 if vim.fn.exists(":TSHighlightCapturesUnderCursor") then
     local function noremap(lhs, rhs)
         vim.api.nvim_set_keymap('n', lhs, rhs, { noremap = true, silent = true })

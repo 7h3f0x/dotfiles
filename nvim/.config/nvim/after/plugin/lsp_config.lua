@@ -33,8 +33,10 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
+local has_cmp, _ = pcall(require, "cmp")
+--- @module 'cmp_nvim_lsp'
 local has_cmp_lsp, cmp_lsp = pcall(require, "cmp_nvim_lsp")
-if has_cmp_lsp then
+if has_cmp and has_cmp_lsp then
     capabilities = cmp_lsp.update_capabilities(capabilities)
 end
 
@@ -43,14 +45,14 @@ if has_lsp_status then
 end
 
 local lang_servers = {
-    "pyls_ms", "clangd", "rust_analyzer", "tsserver", "gopls", "cmake", "vimls", "bashls", "sumneko_lua",  "jdtls"
+    "pyright", "clangd", "rust_analyzer", "tsserver", "gopls", "cmake", "vimls", "bashls", "sumneko_lua",  "jdtls"
 }
 
 if vim.tbl_contains(lang_servers, "pyls_ms") then
     require("7h3f0x.pyls_ms_config")
 end
 
-local force_cwd_candidates = { "pyls_ms", "jdtls" }
+local force_cwd_candidates = { "pyls_ms", "jdtls", "tsserver" }
 
 local config_overrides = {}
 
@@ -85,8 +87,8 @@ config_overrides.pyls_ms = {
         else
             -- Use python3 if no virtualenv or if I am in my `ctf` folder,
             -- else use whatever is selected by default
-            if os.getenv("VIRTUAL_ENV") == nil and
-                vim.loop.cwd():find(os.getenv('HOME') .. '/ctf') == nil then
+            if os.getenv("VIRTUAL_ENV") == nil --[[and
+                vim.loop.cwd():find(os.getenv('HOME') .. '/ctf') == nil]] then
                 params.initializationOptions.interpreter.properties = {
                     InterpreterPath = "/usr/bin/python3";
                     Version = "3.8";
@@ -145,33 +147,11 @@ end
 
 -- Sumneko Lua LS
 
-local sumneko_root_path = os.getenv("HOME") .. '/tools/lua-language-server'
-local sumneko_binary = sumneko_root_path .. "/bin/Linux/lua-language-server"
-
 local package_path = vim.split(package.path, ';')
 table.insert(package_path, "lua/?.lua")
 table.insert(package_path, "lua/?/init.lua")
 
-local lua_runtime = {};
-for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
-    local lua_path = path .. "/lua";
-    if vim.fn.isdirectory(lua_path) then
-        lua_runtime[lua_path] = true
-    end
-end
-
--- This loads the `lua` files from nvim into the runtime.
-lua_runtime[vim.fn.expand("$VIMRUNTIME/lua")] = true
-lua_runtime[vim.fn.expand("$VIMRUNTIME/lua/vim")] = true
-lua_runtime[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
-lua_runtime[vim.fn.expand("$VIMRUNTIME/lua/vim/treesitter")] = true
-
-lua_runtime[vim.fn.expand("~/tools/neovim/src/nvim/lua")] = true
-lua_runtime[vim.fn.expand("~/tools/neovim/src/cjson/")] = true
-
-
 config_overrides.sumneko_lua = {
-    cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
     settings = {
         Lua = {
             runtime = {
@@ -179,6 +159,8 @@ config_overrides.sumneko_lua = {
                 version = 'LuaJIT',
                 -- Setup your lua path
                 path = package_path,
+                -- do not apply path pattern for subdirectories
+                pathStrict = true,
             },
             completion = {
                 callSnippet = "Replace"
@@ -189,7 +171,7 @@ config_overrides.sumneko_lua = {
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files
-                library = lua_runtime,
+                library = vim.api.nvim_get_runtime_file("", true),
                 maxPreload = 10000,
                 preloadFileSize = 10000,
             },
@@ -222,18 +204,32 @@ config_overrides.jdtls = {
 
 for _, name in ipairs(lang_servers) do
     local root_dir = nil
+    local default_config = lsp_config[name].document_config.default_config
     if vim.tbl_contains(force_cwd_candidates, name) then
         root_dir = vim.loop.cwd
     else
         root_dir = function(fname)
-            return lsp_config[name].document_config.default_config.root_dir(fname) or vim.loop.cwd()
+            -- nvim 0.5.1 onwards allows root_dir to be nil
+            if vim.fn.has("nvim-0.5.1") == 0 then
+                return default_config.root_dir(fname) or vim.loop.cwd()
+            else
+                return default_config.root_dir(fname)
+            end
         end
     end
+
+    local handler_compat = require("7h3f0x.lsp").handler_compat
+    local handlers = {}
+    for k, v in pairs(default_config.handler_compat or {}) do
+        handlers[k] = handler_compat(v)
+    end
+
     lsp_config[name].setup(
         vim.tbl_deep_extend("force", {
             root_dir = root_dir,
             on_attach = on_attach,
             capabilities = capabilities,
+            handlers = handlers,
         }, config_overrides[name] or {})
     )
 end

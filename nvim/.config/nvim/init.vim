@@ -22,7 +22,11 @@ if !exists("g:vscode")
     Plug 'hrsh7th/cmp-buffer'
     Plug 'L3MON4D3/LuaSnip'
     Plug 'saadparwaiz1/cmp_luasnip'
-    Plug 'nvim-lua/lsp-status.nvim'
+    if !has('nvim-0.6')
+        Plug 'nvim-lua/lsp-status.nvim', {'commit': 'e8e5303f9ee3d8dc327c97891eaa1257ba5d4eee'}
+    else
+        Plug 'nvim-lua/lsp-status.nvim'
+    endif
     Plug 'onsails/lspkind-nvim'
 
     Plug 'windwp/nvim-autopairs'
@@ -53,7 +57,7 @@ call plug#end()
 " 1}}}
 
 if !exists("g:vscode")
-    lua require('impatient')
+    lua pcall(require, 'impatient')
     let g:cursorhold_updatetime = 1000
 endif
 

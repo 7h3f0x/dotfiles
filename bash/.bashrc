@@ -134,9 +134,5 @@ bind "\C-f":"reverse-search-history"
 # Restore i-beam cursor before each prompt
 PROMPT_COMMAND="echo -ne '\e[5 q'"
 
-[ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # source $HOME/.local/etc/bash_completion.d/youtube-dl.bash-completion
 
