@@ -41,12 +41,6 @@ bindkey -M viins '\C-p' reverse-menu-complete
 zmodload zsh/complist
 bindkey -M menuselect '\C-y' accept-search
 
-# use h/j/k/l to move around in menu selection
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-
 # History Stuff
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=50000

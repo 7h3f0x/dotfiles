@@ -28,6 +28,7 @@ fi
 
 alias man="colored man"
 alias ff='fzf --preview "batcat --color=always {}"'
+alias parrot='curl parrot.live'
 
 # Functions
 

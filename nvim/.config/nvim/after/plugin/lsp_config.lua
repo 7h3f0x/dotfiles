@@ -171,7 +171,8 @@ config_overrides.sumneko_lua = {
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file("", true),
+                -- nvim below 0.6 returns nothing if given `""`
+                library = vim.api.nvim_get_runtime_file("/", true),
                 maxPreload = 10000,
                 preloadFileSize = 10000,
             },

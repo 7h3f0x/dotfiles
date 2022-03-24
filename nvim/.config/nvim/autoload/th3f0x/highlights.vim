@@ -45,6 +45,7 @@ function! th3f0x#highlights#highlight_onedark() abort
     highlight! link CmpItemMenu type
     highlight! CmpItemAbbrMatch      ctermfg=215 guifg=#FFAF5F gui=bold cterm=bold
     highlight! CmpItemAbbrMatchFuzzy ctermfg=215 guifg=#FFAF5F gui=bold cterm=bold
+    highlight! link FidgetTask CursorLineNr
 
 endfunction
 

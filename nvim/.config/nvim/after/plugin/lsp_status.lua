@@ -8,7 +8,10 @@ for key, val in pairs(require("7h3f0x.lsp-status.extensions.pyls_ms")) do
     lsp_status.extensions.pyls_ms[key] = val
 end
 
-lsp_status.register_progress()
+if not pcall(require, "fidget") then
+    -- let fidget show progress messages if available
+    lsp_status.register_progress()
+end
 
 local function select_symbol(cursor_pos, symbol)
     if symbol.valueRange then
