@@ -20,12 +20,14 @@ vim.opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
 cmp.setup({
     PreselectMode = cmp.PreselectMode.None,
 
-    documentation = {
-        border = "rounded",
-        max_width = 120,
-        min_width = 30,
-        max_height = math.floor(vim.o.lines * 0.3),
-        min_height = 1,
+    window = {
+        documentation = {
+            border = "rounded",
+            max_width = 120,
+            min_width = 30,
+            max_height = math.floor(vim.o.lines * 0.3),
+            min_height = 1,
+        }
     },
 
     snippet = {
@@ -42,15 +44,14 @@ cmp.setup({
         { name = "buffer" },
     }),
 
-    mapping = {
+    mapping = cmp.mapping.preset.insert({
         ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i' }),
         ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i' }),
         ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
         ['<C-e>'] = cmp.mapping({
             i = cmp.mapping.abort(),
         }),
-    },
-
+    }),
 
     formatting = {
         format = function(entry, vim_item)
@@ -66,11 +67,6 @@ cmp.setup({
                 return vim_item
             end
         end,
-    },
-
-    experimental = {
-        native_menu = false,
-        ghost_text = false,
     },
 })
 

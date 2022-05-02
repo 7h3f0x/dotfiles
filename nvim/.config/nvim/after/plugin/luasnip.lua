@@ -10,7 +10,7 @@ local i = ls.insert_node
 local rep = require("luasnip.extras").rep
 local fmt = require("luasnip.extras.fmt").fmt
 
-ls.snippets = {
+local snippets = {
     c = {
         s({trig = "mainv", name = "mainv",
             dscr = "Standard C main function with no command-line arguments"}, {
@@ -71,6 +71,10 @@ ls.snippets = {
         )
     }
 }
+
+for k, v in pairs(snippets) do
+    ls.add_snippets(k, v)
+end
 
 ls.filetype_extend("cpp", {"c"})
 

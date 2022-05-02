@@ -11,7 +11,12 @@ endif
 
 call plug#begin(stdpath('data') . '/plugged')
 
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+if !has("nvim-0.7")
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'commit': 'bc25a6a5c4fd659bbf78ba0a2442ecf14eb00398'}
+else
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+endif
+
 Plug 'nvim-treesitter/playground', {'on': [ 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' ]}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
@@ -20,7 +25,11 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'L3MON4D3/LuaSnip'
-Plug 'saadparwaiz1/cmp_luasnip'
+if !has("nvim-0.7")
+    Plug 'saadparwaiz1/cmp_luasnip', {'commit': 'b10829736542e7cc9291e60bab134df1273165c9'}
+else
+    Plug 'saadparwaiz1/cmp_luasnip'
+endif
 if !has('nvim-0.6')
     Plug 'nvim-lua/lsp-status.nvim', {'commit': 'e8e5303f9ee3d8dc327c97891eaa1257ba5d4eee'}
 else

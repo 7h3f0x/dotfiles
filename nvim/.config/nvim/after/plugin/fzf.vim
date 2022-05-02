@@ -84,7 +84,9 @@ nnoremap <silent> <Leader>fm <cmd>FzfMan<CR>
 
 lua << EOF
 
-vim.ui.select = require("7h3f0x.fzf_helpers").vim_ui_select
+if vim.ui then
+    vim.ui.select = require("7h3f0x.fzf_helpers").vim_ui_select
+end
 
 EOF
 
