@@ -48,11 +48,7 @@ local lang_servers = {
     "pyright", "clangd", "rust_analyzer", "tsserver", "gopls", "cmake", "vimls", "bashls", "sumneko_lua",  "jdtls"
 }
 
-if vim.tbl_contains(lang_servers, "pyls_ms") then
-    require("7h3f0x.pyls_ms_config")
-end
-
-local force_cwd_candidates = { "pyls_ms", "jdtls", "tsserver" }
+local force_cwd_candidates = { "jdtls", "tsserver" }
 
 local config_overrides = {}
 
@@ -70,78 +66,6 @@ if has_lsp_status then
         "keep",
         config_overrides.clangd.handlers or {},
         lsp_status.extensions.clangd.setup()
-    )
-end
-
--- Microsoft-pyls setup
-
-config_overrides.pyls_ms = {
-    cmd = { "Microsoft.Python.LanguageServer" },
-    before_init = function(params, _config)
-        local prog = vim.g.python_prog
-        if prog then
-            params.initializationOptions.interpreter.properties = {
-                InterpreterPath = prog.path;
-                Version = prog.version;
-            }
-        else
-            -- Use python3 if no virtualenv or if I am in my `ctf` folder,
-            -- else use whatever is selected by default
-            if os.getenv("VIRTUAL_ENV") == nil --[[and
-                vim.loop.cwd():find(os.getenv('HOME') .. '/ctf') == nil]] then
-                params.initializationOptions.interpreter.properties = {
-                    InterpreterPath = "/usr/bin/python3";
-                    Version = "3.8";
-                }
-            end
-        end
-    end,
-    commands = {
-        PythonSelectInterpreter = {
-            function()
-                local prompt =  "Select Python Interpreter: "
-                local paths = { "/usr/bin/python", "/usr/bin/python3" };
-                local p =  vim.fn.exepath('python');
-                if not vim.tbl_contains(paths, p) then
-                    table.insert(paths, p)
-                end
-
-                table.insert(paths, "Default")
-
-                vim.ui.select(paths, { prompt = prompt }, function (item, idx)
-                    if not item then
-                        return
-                    end
-                    if item == "Default" then
-                        vim.g.python_prog = nil
-                    else
-                        vim.g.python_prog = {
-                            path = paths[idx],
-                            version = vim.fn.system({
-                                paths[idx],
-                                '-c',
-                                'import platform;print(platform.python_version())'
-                            })
-                        }
-                    end
-                    vim.cmd([[LspRestart]])
-                end)
-            end,
-            description = 'Select Python Interpreter',
-        }
-    }
-}
-
-if has_lsp_status then
-    config_overrides.pyls_ms.settings = vim.tbl_deep_extend(
-        "keep",
-        config_overrides.pyls_ms.settings or {},
-        { settings = { python = { workspaceSymbols = { enabled = true }}} }
-    )
-    config_overrides.pyls_ms.handlers = vim.tbl_extend(
-        "keep",
-        config_overrides.pyls_ms.handlers or {},
-        require("7h3f0x.lsp-status.extensions.pyls_ms").setup()
     )
 end
 

@@ -4,10 +4,6 @@ end
 
 local lsp_status = require("lsp-status")
 
-for key, val in pairs(require("7h3f0x.lsp-status.extensions.pyls_ms")) do
-    lsp_status.extensions.pyls_ms[key] = val
-end
-
 if not pcall(require, "fidget") then
     -- let fidget show progress messages if available
     lsp_status.register_progress()
