@@ -1,4 +1,3 @@
-
 augroup non_plugin
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank()
@@ -7,3 +6,10 @@ augroup non_plugin
     autocmd BufWritePre * call th3f0x#autocmds#clean_whitespace()
 augroup END
 
+if getenv("IS_WSL")
+    augroup WinClip
+        autocmd!
+        " Yank to Windows Clipboard when needed(using the <leader>y mapping
+        autocmd TextYankPost * silent! call th3f0x#wsl#yankWinClip()
+    augroup end
+endif

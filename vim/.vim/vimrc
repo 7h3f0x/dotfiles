@@ -76,6 +76,12 @@ function! s:tmux_helper(direction) abort
     execute 'wincmd ' . a:direction
 endfunction
 
+function! YankWinClip() abort
+    if v:event.operator ==# 'y' && v:event.regname ==# '+'
+        call system('clip.exe', getreg('+'))
+    endif
+endfunction
+
 command! Config edit $MYVIMRC
 
 " Key Mappings: {{{1
@@ -89,11 +95,17 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 nnoremap <M-a> ggVG
 " Select previously pasted text
 nnoremap <Leader>v `[v`]
-" If I mention register explicitly (to somthing other than "), copy to that
-" register, else copy to clipboard
-nnoremap <silent><expr> y  v:register == '"' ? '"+y' : 'y'
-nnoremap <silent><expr> Y  v:register == '"' ? '"+y$' : 'y$'
-xnoremap <silent><expr> y  v:register == '"' ? '"+y' : 'y'
+if !getenv('IS_WSL')
+    " If I mention register explicitly (to somthing other than "), copy to that
+    " register, else copy to clipboard
+    nnoremap <silent><expr> y  v:register == '"' ? '"+y' : 'y'
+    nnoremap <silent><expr> Y  v:register == '"' ? '"+y$' : 'y$'
+    xnoremap <silent><expr> y  v:register == '"' ? '"+y' : 'y'
+else
+    nnoremap <leader>y "+y
+    xnoremap <leader>y "+y
+endif
+
 
 nnoremap <Leader>p "+p
 nnoremap <Leader>P "+P
@@ -149,6 +161,14 @@ augroup myAutocmds
     autocmd VimLeave * silent! !echo -ne "\e[5 q"
 
 augroup END
+
+if getenv("IS_WSL") == '1'
+    augroup WinClip
+        autocmd!
+        " Yank to Windows Clipboard when needed(using the <leader>y mapping
+        autocmd TextYankPost * silent! call YankWinClip()
+    augroup end
+endif
 
 " Syntax Highlighting:{{{1
 

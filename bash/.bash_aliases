@@ -71,4 +71,15 @@ load_nvm() {
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 }
 
+display() {
+    if [ -z "$IS_WSL" ]; then
+        return
+    fi
+    if [ -z "$DISPLAY" ]; then
+        export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0 # in WSL 2
+        export LIBGL_ALWAYS_INDIRECT=1
+    else
+        unset DISPLAY
+    fi
+}
 

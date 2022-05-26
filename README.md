@@ -1,7 +1,7 @@
 # Dotfiles
 
 This is my dotfiles repository. Currently dotfiles are managed using `stow`.
-Dotfiles are currently being used on Kubuntu-22.04
+Dotfiles are currently being used on Kubuntu-22.04, Ubuntu 20.04 on WSL2.
 
 ## Installation
 

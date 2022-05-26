@@ -50,3 +50,8 @@ if [ -d "$HOME/.nvm" ] ; then
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 fi
 export SPICE_NOGRAB=1
+
+# Check if we are Running WSL2
+if uname -a | grep microsoft &>/dev/null ; then
+    export IS_WSL=1
+fi
