@@ -1,7 +1,7 @@
 # Dotfiles
 
 This is my dotfiles repository. Currently dotfiles are managed using `stow`.
-Dotfiles are currently being used on Ubuntu-20.04
+Dotfiles are currently being used on Kubuntu-22.04
 
 ## Installation
 
@@ -57,6 +57,13 @@ or manually setup for required programs like:
 stow <program name>
 ```
 
+- For nvim, install [vim-plug](https://github.com/junegunn/vim-plug), then execute `:PlugInstall` inside.
+Currently, this method works:
+```sh
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+```
+
 ## Other things
 
 ### Update zsh plugins
@@ -86,6 +93,16 @@ wget "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/UbuntuMon
 wget "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/UbuntuMono/Regular-Italic/complete/Ubuntu%20Mono%20Italic%20Nerd%20Font%20Complete.ttf"
 wget "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/UbuntuMono/Bold/complete/Ubuntu%20Mono%20Bold%20Nerd%20Font%20Complete.ttf"
 wget "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/UbuntuMono/Bold-Italic/complete/Ubuntu%20Mono%20Bold%20Italic%20Nerd%20Font%20Complete.ttf"
+```
+
+for Hack (Monospace glyphs)
+```sh
+mkdir -p ~/.local/share/fonts/Hack
+cd ~/.local/share/fonts/Hack
+wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete%20Mono.ttf
+wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Italic/complete/Hack%20Italic%20Nerd%20Font%20Complete%20Mono.ttf
+wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/BoldItalic/complete/Hack%20Bold%20Italic%20Nerd%20Font%20Complete%20Mono.ttf
+wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Bold/complete/Hack%20Bold%20Nerd%20Font%20Complete%20Mono.ttf
 ```
 
 - Use fontconfig to prepend nerd icons

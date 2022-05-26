@@ -204,4 +204,5 @@ fi
 # uncomment for profiling
 # zprof
 
-alias luamake=/home/thefox/projects/lua-language-server/3rd/luamake/luamake
+export SHELL=/bin/zsh
+

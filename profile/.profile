@@ -26,11 +26,27 @@ if [ -d "$HOME/bin" ] ; then
 	PATH="$HOME/bin:$PATH"
 fi
 
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-export GOPATH="$HOME/go"
-export PATH=$PATH:$HOME/tools/john-1.9.0-jumbo-1/run
+add_to_path() {
+    if [ -d "$1" ] ; then
+        PATH="$1:$PATH"
+    fi
+}
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# export PATH="$HOME/.cargo/bin:$PATH"
+add_to_path "$HOME/.cargo/bin"
+# export PATH="$HOME/go/bin:$PATH"
+add_to_path "$HOME/go/bin"
 
+if [ -d "$HOME/go" ] ; then
+    export GOPATH="$HOME/go"
+fi
+
+if [ -d "$HOME/tools/john-1.9.0-jumbo-1/run" ] ; then
+    export PATH=$PATH:$HOME/tools/john-1.9.0-jumbo-1/run
+fi
+
+if [ -d "$HOME/.nvm" ] ; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+fi
+export SPICE_NOGRAB=1

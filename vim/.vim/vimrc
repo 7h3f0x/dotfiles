@@ -31,7 +31,6 @@ set autoindent
 set smartindent
 set laststatus=2
 set mouse=a
-set clipboard=unnamedplus
 set belloff=all
 " as much as possible of the last line in a window will be
 " displayed. (useful when wrap is enabled for long lines)
@@ -90,9 +89,15 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 nnoremap <M-a> ggVG
 " Select previously pasted text
 nnoremap <Leader>v `[v`]
-noremap Y y$
-noremap c "_c
-nnoremap cc "_cc
+" If I mention register explicitly (to somthing other than "), copy to that
+" register, else copy to clipboard
+nnoremap <silent><expr> y  v:register == '"' ? '"+y' : 'y'
+nnoremap <silent><expr> Y  v:register == '"' ? '"+y$' : 'y$'
+xnoremap <silent><expr> y  v:register == '"' ? '"+y' : 'y'
+
+nnoremap <Leader>p "+p
+nnoremap <Leader>P "+P
+xnoremap <Leader>p "+p
 " Change word under cursor, use . to keep repeat replacing
 " that word, n to skip over some match
 nnoremap c* *N"_cgn
@@ -103,6 +108,8 @@ cnoremap <C-a> \=setreg('A', submatch(0), 'V')/gn
 nnoremap <M-q> :bprevious <bar> bdelete #<CR>
 nnoremap <silent> <Leader>rn :set norelativenumber!<CR>
 nnoremap <silent> <Leader>n :nohlsearch<CR>
+
+nnoremap - <cmd>execute "Explore " . expand("%:p:h")<CR>
 
 " Move selection of lines up or down
 vnoremap <C-j> :move '>+1<CR>gv
@@ -138,7 +145,7 @@ augroup myAutocmds
                 \| endif
 
     " Cursor shapes on startup and exit
-    autocmd VimEnter * silent! !echo -ne "\e[2 q"
+    autocmd VimEnter * norm! :<ESC>
     autocmd VimLeave * silent! !echo -ne "\e[5 q"
 
 augroup END

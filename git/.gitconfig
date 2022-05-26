@@ -6,7 +6,6 @@
     graph = log --all --graph --decorate
 
 [core]
-    editor = nvim
     excludesFile = ~/.cvsignore
     pager = LESS='-RF' delta
 
