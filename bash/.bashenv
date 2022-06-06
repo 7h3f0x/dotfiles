@@ -8,7 +8,6 @@ else
     export FZF_DEFAULT_COMMAND='find . -type f'
 fi
 export FZF_DEFAULT_OPTS='--color dark,hl:166,hl+:166 --bind=ctrl-j:preview-down,ctrl-k:preview-up,ctrl-g:first,ctrl-a:select-all,ctrl-d:deselect-all'
-export EXA_COLORS="da=38;5;36"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 if command -v nvim &> /dev/null; then

@@ -26,30 +26,31 @@ if [ -d "$HOME/bin" ] ; then
 	PATH="$HOME/bin:$PATH"
 fi
 
-add_to_path() {
+prepend_to_path() {
     if [ -d "$1" ] ; then
         PATH="$1:$PATH"
     fi
 }
 
-# export PATH="$HOME/.cargo/bin:$PATH"
-add_to_path "$HOME/.cargo/bin"
-# export PATH="$HOME/go/bin:$PATH"
-add_to_path "$HOME/go/bin"
+append_to_path() {
+    if [ -d "$1" ] ; then
+        PATH="$PATH:$1"
+    fi
+}
+
+prepend_to_path "$HOME/.cargo/bin"
+prepend_to_path "$HOME/go/bin"
 
 if [ -d "$HOME/go" ] ; then
     export GOPATH="$HOME/go"
 fi
 
-if [ -d "$HOME/tools/john-1.9.0-jumbo-1/run" ] ; then
-    export PATH=$PATH:$HOME/tools/john-1.9.0-jumbo-1/run
-fi
+append_to_path "$HOME/tools/john-1.9.0-jumbo-1/run"
 
 if [ -d "$HOME/.nvm" ] ; then
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 fi
-export SPICE_NOGRAB=1
 
 # Check if we are Running WSL2
 if uname -a | grep microsoft &>/dev/null ; then

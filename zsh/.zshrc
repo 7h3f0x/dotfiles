@@ -185,8 +185,8 @@ if [[ -f "$ZSH_HIGHLIGHTING_FILE" ]]; then
     ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]='underline'
     ZSH_HIGHLIGHT_STYLES[default]="fg=cyan"
     ZSH_HIGHLIGHT_STYLES[path]='fg=cyan,underline'
-    ZSH_HIGHLIGHT_STYLES[double-hyphen-option]="fg=166,bold"
-    ZSH_HIGHLIGHT_STYLES[single-hyphen-option]="fg=166,bold"
+    ZSH_HIGHLIGHT_STYLES[double-hyphen-option]="fg=blue,bold"
+    ZSH_HIGHLIGHT_STYLES[single-hyphen-option]="fg=blue,bold"
     ZSH_HIGHLIGHT_STYLES[commandseparator]="fg=magenta"
     ZSH_HIGHLIGHT_STYLES[assign]="fg=167"
     ZSH_HIGHLIGHT_STYLES[comment]="fg=8"

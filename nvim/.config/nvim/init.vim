@@ -1,6 +1,8 @@
 " Vim Plug Section:{{{1
 
-try
+let s:data_dir = stdpath('data') . '/site'
+
+if !empty(glob(s:data_dir . '/autoload/plug.vim')) && !(v:progname == 'vim')
     call plug#begin(stdpath('data') . '/plugged')
 
     if !has("nvim-0.7")
@@ -54,9 +56,7 @@ try
     Plug 'tpope/vim-repeat'
 
     call plug#end()
-catch
-
-endtry
+endif
 
 " 1}}}
 
