@@ -1,4 +1,3 @@
-
 " Netrw:{{{
 
 " Don't show hidden files by default
@@ -15,5 +14,6 @@ let g:markdown_folding = 1
 
 " }}}
 
-" vim:foldmethod=marker
+let g:python3_host_prog = '/usr/bin/python3'
 
+" vim:foldmethod=marker

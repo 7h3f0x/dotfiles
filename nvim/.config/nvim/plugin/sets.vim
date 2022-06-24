@@ -39,9 +39,6 @@ set foldlevelstart=99
 set backupcopy=yes
 
 set showtabline=2
-if has("nvim-0.7")
-    set laststatus=3
-endif
 
 set noequalalways
 

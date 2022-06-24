@@ -16,3 +16,5 @@ else
     export EDITOR=vim
 fi
 
+export WORKON_HOME=$HOME/.venvs
+

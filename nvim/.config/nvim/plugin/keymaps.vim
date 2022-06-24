@@ -78,6 +78,8 @@ if !getenv('IS_WSL')
 else
     nnoremap <leader>y "+y
     xnoremap <leader>y "+y
+    nnoremap Y y$
+    nnoremap <leader>Y "+y$
 endif
 
 nnoremap <Leader>p "+p

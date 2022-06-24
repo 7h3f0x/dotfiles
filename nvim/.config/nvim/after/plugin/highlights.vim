@@ -1,10 +1,6 @@
 augroup color_scheme
     autocmd!
-    autocmd ColorScheme onedark call th3f0x#highlights#highlight_onedark()
-    " The lua version of onedark basically does `lua require'onedark'`
-    " The package is already loaded, files won't be sourced again, if I dont
-    " force it to reload using this technique
-    autocmd ColorSchemePre onedark lua package.loaded['onedark'] = nil
+    autocmd ColorScheme onedark if g:colors_name == expand("<amatch>") | call th3f0x#highlights#onedark#highlight() | endif
 augroup END
 
 try

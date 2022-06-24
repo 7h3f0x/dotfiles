@@ -16,16 +16,6 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-	PATH="$HOME/bin:$PATH"
-fi
-
 prepend_to_path() {
     if [ -d "$1" ] ; then
         PATH="$1:$PATH"
@@ -38,18 +28,18 @@ append_to_path() {
     fi
 }
 
+
+# set PATH so it includes user's private bin if it exists
+prepend_to_path "$HOME/.local/bin"
+
+# set PATH so it includes user's private bin if it exists
+prepend_to_path "$HOME/bin"
+
 prepend_to_path "$HOME/.cargo/bin"
 prepend_to_path "$HOME/go/bin"
 
 if [ -d "$HOME/go" ] ; then
     export GOPATH="$HOME/go"
-fi
-
-append_to_path "$HOME/tools/john-1.9.0-jumbo-1/run"
-
-if [ -d "$HOME/.nvm" ] ; then
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 fi
 
 # Check if we are Running WSL2

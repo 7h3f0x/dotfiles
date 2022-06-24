@@ -105,6 +105,8 @@ wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/BoldI
 wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Bold/complete/Hack%20Bold%20Nerd%20Font%20Complete%20Mono.ttf
 ```
 
+**NOTE** For Windows Terminal, get fonts from [here](https://github.com/adam7/delugia-code/releases), install all files included in zip file from release
+
 - Use fontconfig to prepend nerd icons
 
 ```sh
@@ -141,7 +143,10 @@ fc-cache -fv
 sudo apt install tmux git vim-gtk3 zsh
 ```
 
-- For nvim, build from [source](https://github.com/neovim/neovim#install-from-source) or grab a [release](https://github.com/neovim/neovim/releases) >= 0.5
+- For nvim, build from
+  [source](https://github.com/neovim/neovim#install-from-source) / grab a
+  [release](https://github.com/neovim/neovim/releases) / use one provided by
+  package manager
 
 - For tldr
 
