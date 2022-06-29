@@ -23,6 +23,7 @@ shopt -s histappend
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=10000
 HISTFILESIZE=10000
+HISTFILE="${XDG_STATE_HOME}"/bash/history
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -113,6 +114,3 @@ bind '"\C-w":backward-kill-word'
 
 # Restore i-beam cursor before each prompt
 PROMPT_COMMAND="echo -ne '\e[5 q'"
-
-# source $HOME/.local/etc/bash_completion.d/youtube-dl.bash-completion
-

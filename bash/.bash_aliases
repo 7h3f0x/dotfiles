@@ -29,13 +29,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias fun="fortune | figlet | cowsay -n | lolcat"
 alias pandoc='docker run --rm --volume "`pwd`:/data" --user `id -u`:`id -g` pandoc/latex'
 
-if command -v exa &> /dev/null; then
-    alias ls="exa --color=auto"
-    alias ll="exa --color=auto -lg"
-    alias la="exa --color=auto -a"
-    alias lla="exa --color=auto -lga"
-fi
-
 alias mv="mv -i"
 alias cp="cp -i"
 alias clip="xclip -sel clip"

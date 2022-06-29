@@ -113,9 +113,9 @@ xnoremap <Leader>p "+p
 " Change word under cursor, use . to keep repeat replacing
 " that word, n to skip over some match
 nnoremap c* *N"_cgn
-vnoremap <BS> "_d
+xnoremap <BS> "_d
 " Copy all search matches in selected area into register a
-vnoremap <Leader>a :%s//\=setreg('A', submatch(0), 'V')/gn
+xnoremap <Leader>a :%s//\=setreg('A', submatch(0), 'V')/gn
 cnoremap <C-a> \=setreg('A', submatch(0), 'V')/gn
 nnoremap <M-q> :bprevious <bar> bdelete #<CR>
 nnoremap <silent> <Leader>rn :set norelativenumber!<CR>
@@ -124,8 +124,8 @@ nnoremap <silent> <Leader>n :nohlsearch<CR>
 nnoremap - <cmd>execute "Explore " . expand("%:p:h")<CR>
 
 " Move selection of lines up or down
-vnoremap <C-j> :move '>+1<CR>gv
-vnoremap <C-k> :move '<-2<CR>gv
+xnoremap <C-j> :move '>+1<CR>gv
+xnoremap <C-k> :move '<-2<CR>gv
 
 " Move around splits in both vim and tmux
 for key in keys(s:tmux_map)
@@ -162,7 +162,7 @@ augroup myAutocmds
 
 augroup END
 
-if getenv("IS_WSL") == '1'
+if getenv("IS_WSL")
     augroup WinClip
         autocmd!
         " Yank to Windows Clipboard when needed(using the <leader>y mapping

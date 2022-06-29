@@ -7,13 +7,9 @@
 
 [core]
     excludesFile = ~/.cvsignore
-    pager = LESS='-RF' delta
-
-[interactive]
-    diffFilter = delta --color-only --features=interactive
 
 [delta]
-    features = line-numbers decorations # side-by-side
+    features = line-numbers decorations
     ; side-by-side = true
     whitespace-error-style = 22 reverse
     light = false
@@ -25,13 +21,15 @@
     file-decoration-style = none
     hunk-header-decoration-style = yellow box
 
+[merge]
+    conflictstyle = diff3
+
 [diff]
     colorMoved = default
 
 [color]
     ui = auto
-[pull]
-    # rebase = true
+
 [filter "lfs"]
 	process = git-lfs filter-process
 	required = true

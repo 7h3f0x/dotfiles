@@ -3,23 +3,29 @@ package.loaded['7h3f0x.floatterm'] = nil
 local M = {}
 
 vim.t = vim.t or setmetatable({}, {
-    __index = function(_, key)
-        local is_valid, val = pcall(nvim_tabpage_get_var, 0, key)
+    __index = function(tbl, key)
+        local is_valid, val = pcall(vim.api.nvim_tabpage_get_var, 0, key)
         if is_valid then
             return val
         end
         return nil
-    end
+    end,
+    __newindex = function(tbl, key, val)
+        vim.api.nvim_tabpage_set_var(0, key, val)
+    end,
 })
 
 vim.g = vim.g or setmetatable({}, {
-    __index = function(_, key)
-        local is_valid, val = pcall(nvim_get_option, key)
+    __index = function(tbl, key)
+        local is_valid, val = pcall(vim.api.nvim_get_var, key)
         if is_valid then
             return val
         end
         return nil
-    end
+    end,
+    __newindex = function(tbl, key, val)
+        vim.api.nvim_set_var(key, val)
+    end,
 })
 
 

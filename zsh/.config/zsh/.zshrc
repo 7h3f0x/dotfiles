@@ -27,8 +27,7 @@ zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 setopt  autocd autopushd
-autoload -U +X bashcompinit && bashcompinit
-autoload -U compinit && compinit
+autoload -U +X compinit && compinit
 WORDCHARS='' # oh-my-zsh also has this, proper word boundaries
 bindkey -M emacs '^[[Z' reverse-menu-complete
 
@@ -42,7 +41,7 @@ zmodload zsh/complist
 bindkey -M menuselect '\C-y' accept-search
 
 # History Stuff
-HISTFILE=$HOME/.zsh_history
+HISTFILE="$XDG_STATE_HOME"/zsh/history
 HISTSIZE=50000
 SAVEHIST=10000
 
@@ -146,13 +145,11 @@ FZF_KEYBIND_FILE=$HOME/tools/fzf/shell/key-bindings.zsh
 
 [[ -f "$FZF_KEYBIND_FILE" ]] && source "$FZF_KEYBIND_FILE"
 
-export ZSH_CUSTOM=$HOME/.zcustom
-
 autoload -U colors && colors
-MY_ZSH_THEME_FILE=$ZSH_CUSTOM/themes/thefox.zsh-theme
+MY_ZSH_THEME_FILE="$ZDOTDIR"/themes/thefox.zsh-theme
 [[ -f "$MY_ZSH_THEME_FILE" ]] && source "$MY_ZSH_THEME_FILE"
 
-ZSH_PLUGIN_DIR=$ZSH_CUSTOM/plugins
+ZSH_PLUGIN_DIR="$ZDOTDIR"/plugins
 
 
 ZSH_AUTOSUGGESTION_FILE=$ZSH_PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -173,8 +170,8 @@ if [[ -f "$ZSH_HIGHLIGHTING_FILE" ]]; then
     ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]='underline'
     ZSH_HIGHLIGHT_STYLES[default]="fg=cyan"
     ZSH_HIGHLIGHT_STYLES[path]='fg=cyan,underline'
-    ZSH_HIGHLIGHT_STYLES[double-hyphen-option]="fg=blue,bold"
-    ZSH_HIGHLIGHT_STYLES[single-hyphen-option]="fg=blue,bold"
+    ZSH_HIGHLIGHT_STYLES[double-hyphen-option]="fg=166,bold"
+    ZSH_HIGHLIGHT_STYLES[single-hyphen-option]="fg=166,bold"
     ZSH_HIGHLIGHT_STYLES[commandseparator]="fg=magenta"
     ZSH_HIGHLIGHT_STYLES[assign]="fg=167"
     ZSH_HIGHLIGHT_STYLES[comment]="fg=8"
@@ -182,12 +179,9 @@ if [[ -f "$ZSH_HIGHLIGHTING_FILE" ]]; then
     ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]="fg=cyan"
 fi
 
-if [ -f ~/.zsh_aliases ]; then
-    . ~/.zsh_aliases
+if [ -f "$ZDOTDIR"/.zsh_aliases ]; then
+    . "$ZDOTDIR"/.zsh_aliases
 fi
-
-# autoload -U +X bashcompinit && bashcompinit
-# source $HOME/.local/etc/bash_completion.d/youtube-dl.bash-completion
 
 # uncomment for profiling
 # zprof

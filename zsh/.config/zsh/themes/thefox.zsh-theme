@@ -31,7 +31,7 @@ function _reg_prompt {
 # truncate the first prompt line from left, if length of this portion is
 # greater than $COLUMNS (width of terminal).
 # `%<<` is used to signal end of segment for which truncation is to take place
-PROMPT='%${COLUMNS}<<%{$fg_bold[red]%}%n%{$fg[red]%}@%{$fg_bold[red]%}%m %{$fg[cyan]%}%~ %{$fg_bold[magenta]%}${vcs_info_msg_0_}%{$reset_color%} %  %<<'$'\n''$PROMPT_MODE %{$fg_bold[green]%}➜  %{$reset_color%}'
+PROMPT='%${COLUMNS}<<%{$fg_bold[red]%}%n%{$fg[red]%}@%{$fg_bold[red]%}%m %{$fg[cyan]%}%~ %{$fg_bold[magenta]%}${vcs_info_msg_0_}%{$reset_color%} %  %<<'$'\n''$PROMPT_MODE %{$fg_bold[green]%}➜ %{$reset_color%}'
 
 
 function keymap_select_hook {

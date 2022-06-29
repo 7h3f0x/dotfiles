@@ -4,6 +4,7 @@ function! th3f0x#highlights#onedark#highlight() abort
     highlight! link vimUsrCmd Identifier
 
     highlight TablineSel guibg=#98c379 guifg=#282c34
+    highlight IncSearch ctermfg=235 ctermbg=39 guifg=#282C34 guibg=#61AFEF
 
     highlight! link Keyword Statement
     highlight! link FloatBorder NormalFloat
