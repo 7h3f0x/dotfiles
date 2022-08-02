@@ -9,11 +9,9 @@ try
 catch /^Vim\%((\a\+)\)\=:E185/
 
 endtry
-
 highlight def iCursor guibg=white ctermbg=white
 
 highlight def BlackFloat       guibg=black ctermbg=black
 highlight def BlackFloatBorder guibg=black ctermbg=black
 
-highlight CursorLineNr cterm=bold gui=bold
 

@@ -2,11 +2,6 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-# like in zsh, exports available even in shell scripts
-if [ -f ~/.bashenv ]; then
-    source ~/.bashenv
-fi
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -31,7 +26,7 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -49,7 +44,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-force_color_prompt=yes
+# force_color_prompt=yes
 
 
 
@@ -110,6 +105,7 @@ fi
 bind "\C-f":"reverse-search-history"
 [ -f ~/tools/fzf/shell/key-bindings.bash ] && source ~/tools/fzf/shell/key-bindings.bash
 
+bind 'set bind-tty-special-chars Off'
 bind '"\C-w":backward-kill-word'
 
 # Restore i-beam cursor before each prompt

@@ -8,7 +8,7 @@ let g:netrw_special_syntax = 1
 " https://superuser.com/a/1317266
 " Use gx to open url in browser, for WSL
 if getenv("IS_WSL")
-    let g:netrw_browsex_viewer="cmd.exe /C start"
+    let g:netrw_browsex_viewer = 'cmd.exe /C start'
 endif
 
 " }}}

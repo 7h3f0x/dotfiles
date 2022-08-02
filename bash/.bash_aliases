@@ -33,22 +33,16 @@ alias mv="mv -i"
 alias cp="cp -i"
 alias clip="xclip -sel clip"
 alias pip3="python3 -m pip" # running the pip3 script says, use this instead
-alias batman="env MANPAGER=\"sh -c 'col -bx | batcat -l man -p'\" man"
-alias bat="batcat"
 
 if command -v batcat &> /dev/null; then
+    alias batman="env MANPAGER=\"sh -c 'col -bx | batcat -l man -p'\" man"
+    alias bat="batcat"
     alias cat="batcat -pp"
 fi
 
 alias man="colored man"
 alias ff='fzf --preview "batcat --color=always {}"'
 alias parrot='curl parrot.live'
-
-if [[ -n "$VIRTUAL_ENV" ]]; then
-    PS1="($(basename "$VIRTUAL_ENV")) $PS1"
-else
-    [ -f '/usr/share/virtualenvwrapper/virtualenvwrapper.sh' ] && source '/usr/share/virtualenvwrapper/virtualenvwrapper.sh'
-fi
 
 # Functions
 
@@ -97,3 +91,14 @@ display() {
     fi
 }
 
+# Other stuff
+
+if [[ -n "$VIRTUAL_ENV" ]]; then
+    PS1="($(basename "$VIRTUAL_ENV")) $PS1"
+else
+    # Load Virtualenv Wrapper lazily, to reduce shell load time
+    export VIRTUALENVWRAPPER_SCRIPT='/usr/share/virtualenvwrapper/virtualenvwrapper.sh'
+    if [ -f "$VIRTUALENVWRAPPER_SCRIPT" ]; then
+        source '/usr/share/virtualenvwrapper/virtualenvwrapper_lazy.sh'
+    fi
+fi

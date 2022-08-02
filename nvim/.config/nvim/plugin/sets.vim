@@ -22,7 +22,6 @@ set hidden
 set pumheight=10
 set formatoptions+=cr
 set commentstring=//\ %s
-set signcolumn=no
 set mouse=a
 
 " Show as much of the last line as possible(in case of very long lines)
@@ -38,11 +37,7 @@ set foldlevelstart=99
 
 set backupcopy=yes
 
-set showtabline=2
-
 set noequalalways
-
-set completeopt-=preview
 
 set completefunc=syntaxcomplete#Complete
 
@@ -50,4 +45,6 @@ set scrolloff=12
 
 set wildcharm=<C-n>
 let &wildmode = "longest:full,full"
+set colorcolumn=80,120
 
+set grepprg=grep\ -nH

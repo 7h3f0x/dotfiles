@@ -16,6 +16,13 @@ bindkey -M emacs '^[[1;5D' backward-word
 bindkey -M viins '^[[1;5D' backward-word
 bindkey -M vicmd '^[[1;5D' backward-word
 
+# Needs to exist
+if [ ! -d "$XDG_CACHE_HOME/zsh/" ]; then
+    mkdir -p "$XDG_CACHE_HOME/zsh/"
+fi
+
+autoload -U compinit && compinit -d "$XDG_CACHE_HOME/zsh/zcompinit-$ZSH_VERSION"
+
 # CLI Tab-Completion
 zstyle ':completion:*:*:*:*:*' menu select
 
@@ -27,7 +34,6 @@ zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 setopt  autocd autopushd
-autoload -U +X compinit && compinit
 WORDCHARS='' # oh-my-zsh also has this, proper word boundaries
 bindkey -M emacs '^[[Z' reverse-menu-complete
 
@@ -74,14 +80,20 @@ for m in visual viopp; do
     done
 done
 
+if [ -z "$IS_WSL" ]; then
+    CLIP_COMMAND=xclip -i -selection clipboard
+else
+    CLIP_COMMAND=clip.exe
+fi
+
 function vi-yank-xclip-y {
     zle vi-yank
-    echo -n "$CUTBUFFER" | xclip -i -selection clipboard
+    echo -n "$CUTBUFFER" | ${CLIP_COMMAND}
 }
 
 function vi-yank-xclip-Y {
     zle vi-yank-eol
-    echo -n "$CUTBUFFER" | xclip -i -selection clipboard
+    echo -n "$CUTBUFFER" | ${CLIP_COMMAND}
 }
 
 zle -N vi-yank-xclip-y
@@ -172,6 +184,8 @@ if [[ -f "$ZSH_HIGHLIGHTING_FILE" ]]; then
     ZSH_HIGHLIGHT_STYLES[path]='fg=cyan,underline'
     ZSH_HIGHLIGHT_STYLES[double-hyphen-option]="fg=166,bold"
     ZSH_HIGHLIGHT_STYLES[single-hyphen-option]="fg=166,bold"
+    ZSH_HIGHLIGHT_STYLES[single-quoted-argument]="fg=178"
+    ZSH_HIGHLIGHT_STYLES[double-quoted-argument]="fg=178"
     ZSH_HIGHLIGHT_STYLES[commandseparator]="fg=magenta"
     ZSH_HIGHLIGHT_STYLES[assign]="fg=167"
     ZSH_HIGHLIGHT_STYLES[comment]="fg=8"

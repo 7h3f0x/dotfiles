@@ -10,6 +10,10 @@ function! th3f0x#highlights#onedark#highlight() abort
     highlight! link FloatBorder NormalFloat
     highlight Comment gui=NONE
 
+    highlight! link InactiveNormal CursorLine
+
+    highlight CursorLineNr cterm=bold gui=bold
+
     call s:highlight_statusline()
 
 endfunction

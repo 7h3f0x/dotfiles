@@ -89,6 +89,8 @@ xnoremap <Leader>p "+p
 cnoremap <C-j> <Down>
 cnoremap <C-k> <Up>
 
+nnoremap <leader>cp <cmd>pclose<CR>
+
 " }}}
 
 " vim:foldmethod=marker

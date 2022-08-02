@@ -1,14 +1,14 @@
 # Dotfiles
 
 This is my dotfiles repository. Currently dotfiles are managed using `stow`.
-Dotfiles are currently being used on Kubuntu-22.04, Ubuntu 20.04 on WSL2.
+Dotfiles are currently being used on Ubuntu 20.04 on WSL2.
 
 ## Installation
 
-- Install stow and git, curl
+- Install stow and git
 
 ```sh
-sudo apt install stow git curl
+sudo apt install stow git
 ```
 
 ```sh
@@ -35,14 +35,6 @@ Similarly for any other such files/directories as well
 ```sh
 git submodule init
 git submodule update
-```
-
-- Since stow ignores gitignore and cvsignore files if it's own ignore file is
-  not present, it will not stow that file for the `git` package. To get rid of
-  this issues, just create an empty ignore file for stow:
-
-```sh
-touch ~/.stow-global-ignore
 ```
 
 - Finally, run the install script
@@ -150,12 +142,24 @@ sudo apt install tmux git vim-gtk3 zsh
 
 - For tldr
 
-```sh
-npm i -g tldr
-```
-
-or use `npx` to run without global install
+Use `pip` (or better `pipx`)
 
 ```sh
-npx tldr <query>
+pipx install tldr
 ```
+OR
+```sh
+pip3 install tldr
+```
+
+## `xdg-open` on WSL2
+
+Save the following into `~/bin/xdg-open`
+
+```sh
+#!/bin/sh
+
+exec powershell.exe -c start "$@"
+```
+
+Opens files from WSL in default programs for that file format
