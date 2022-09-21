@@ -2,3 +2,4 @@
 /vim/.vim/undo
 /vim/.vim/.netrwhist
 .zcompdump*
+/nvim/.config/nvim/plugin/packer_compiled.lua

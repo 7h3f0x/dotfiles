@@ -153,8 +153,7 @@ add-zsh-hook precmd _precmd_terminal_title
 add-zsh-hook precmd _precmd_ibeam
 
 # FZF
-FZF_KEYBIND_FILE=$HOME/tools/fzf/shell/key-bindings.zsh
-
+FZF_KEYBIND_FILE="/usr/share/doc/fzf/examples/key-bindings.zsh"
 [[ -f "$FZF_KEYBIND_FILE" ]] && source "$FZF_KEYBIND_FILE"
 
 autoload -U colors && colors

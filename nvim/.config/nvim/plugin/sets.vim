@@ -40,6 +40,7 @@ set backupcopy=yes
 set noequalalways
 
 set completefunc=syntaxcomplete#Complete
+set completeopt-=preview
 
 set scrolloff=12
 

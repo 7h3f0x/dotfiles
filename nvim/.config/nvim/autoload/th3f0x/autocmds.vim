@@ -9,3 +9,12 @@ function! th3f0x#autocmds#clean_whitespace() abort
     endif
 endfunction
 
+function th3f0x#autocmds#highlights() abort
+    highlight def iCursor guibg=white ctermbg=white
+
+    highlight def BlackFloat       guibg=black ctermbg=black
+    highlight def BlackFloatBorder guibg=black ctermbg=black
+
+    highlight! link InactiveNormal CursorLine
+endfunction
+

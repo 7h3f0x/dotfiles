@@ -2,37 +2,10 @@ package.loaded['7h3f0x.floatterm'] = nil
 
 local M = {}
 
-vim.t = vim.t or setmetatable({}, {
-    __index = function(tbl, key)
-        local is_valid, val = pcall(vim.api.nvim_tabpage_get_var, 0, key)
-        if is_valid then
-            return val
-        end
-        return nil
-    end,
-    __newindex = function(tbl, key, val)
-        vim.api.nvim_tabpage_set_var(0, key, val)
-    end,
-})
-
-vim.g = vim.g or setmetatable({}, {
-    __index = function(tbl, key)
-        local is_valid, val = pcall(vim.api.nvim_get_var, key)
-        if is_valid then
-            return val
-        end
-        return nil
-    end,
-    __newindex = function(tbl, key, val)
-        vim.api.nvim_set_var(key, val)
-    end,
-})
-
-
 local function set_window_looks(win_id)
 
     -- set the normal highlight group in this window to our custom created group
-    vim.api.nvim_win_set_option(win_id, 'winhighlight', 'Normal:BlackFloat')
+    vim.api.nvim_win_set_option(win_id, 'winhighlight', 'Normal:BlackFloat,FloatBorder:BlackFloat')
 
     -- disable cursorcolumn and cursorline in this window
     vim.api.nvim_win_set_option(win_id, 'cursorcolumn', false)
@@ -64,6 +37,7 @@ local function create_window(buf_id)
         height = term_height,
         col = col,
         row = row,
+        border = "rounded",
     })
 
     -- setup the looks for the window to be created
@@ -77,10 +51,13 @@ local function create_new_terminal()
 
     -- create scratch buffer
     local buf_id = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_call(buf_id, function()
+        vim.fn.termopen(os.getenv("SHELL") or "/bin/sh")
+    end)
 
     -- create floating window using the scratch buffer
     local win_id = create_window(buf_id)
-    vim.api.nvim_command(":terminal")
+    -- vim.api.nvim_command(":terminal")
     return buf_id, win_id
 end
 

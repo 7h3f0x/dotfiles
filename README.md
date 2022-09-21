@@ -1,7 +1,7 @@
 # Dotfiles
 
 This is my dotfiles repository. Currently dotfiles are managed using `stow`.
-Dotfiles are currently being used on Ubuntu 20.04 on WSL2.
+Dotfiles are currently being used on Ubuntu 22.04 on WSL2.
 
 ## Installation
 
@@ -49,11 +49,11 @@ or manually setup for required programs like:
 stow <program name>
 ```
 
-- For nvim, install [vim-plug](https://github.com/junegunn/vim-plug), then execute `:PlugInstall` inside.
+- For nvim, install [packer.nvim](https://github.com/wbthomason/packer.nvim), then execute `:PackerSync` inside.
 Currently, this method works:
 ```sh
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 ```
 
 ## Other things

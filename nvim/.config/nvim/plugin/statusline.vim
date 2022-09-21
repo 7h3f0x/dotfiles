@@ -1,15 +1,15 @@
 let g:statusline_components = {
             \ 'active': {
             \       'left': ['mode', 'git', 'filename_flags'],
-            \       'right': ['filetype', 'location'],
+            \       'right': ['lsp', 'filetype', 'location'],
             \   },
             \ 'inactive': {
             \       'left': ['filename_flags'],
             \       'right': ['filetype', 'location'],
             \   },
             \ 'separator': {
-            \       'left': '|',
-            \       'right': '|',
+            \       'left': '',
+            \       'right': '',
             \   },
             \}
 

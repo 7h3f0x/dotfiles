@@ -59,6 +59,8 @@ esac
 #   fi
 #fi
 
+export GIT_PS1_SHOWDIRTYSTATE=1
+
 # Add git branch if its present to PS1
 if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;33m\]$(__git_ps1)\[\033[00m\]\n\[\033[0;31m\]\$ \[\033[00m\]'
@@ -103,7 +105,8 @@ if ! shopt -oq posix; then
 fi
 
 bind "\C-f":"reverse-search-history"
-[ -f ~/tools/fzf/shell/key-bindings.bash ] && source ~/tools/fzf/shell/key-bindings.bash
+FZF_KEYBIND_FILE="/usr/share/doc/fzf/examples/key-bindings.bash"
+[ -f "$FZF_KEYBIND_FILE" ] && source "$FZF_KEYBIND_FILE"
 
 bind 'set bind-tty-special-chars Off'
 bind '"\C-w":backward-kill-word'

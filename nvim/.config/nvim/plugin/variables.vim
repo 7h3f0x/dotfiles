@@ -15,7 +15,9 @@ endif
 
 " Markdown:{{{
 
-let g:markdown_fenced_languages = ['c', 'cpp', 'java', 'go', 'python', 'bash=sh', 'sh', 'javascript', 'js=javascript', 'php', 'vim', 'man', 'cmake', 'lua']
+let g:markdown_fenced_languages = ['c', 'cpp', 'java', 'go', 'python',
+            \   'py=python', 'bash=sh', 'sh', 'javascript', 'js=javascript', 'php', 'vim',
+            \   'viml=vim', 'man', 'cmake', 'lua']
 let g:markdown_folding = 1
 
 " }}}
