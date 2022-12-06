@@ -15,6 +15,10 @@ function th3f0x#autocmds#highlights() abort
     highlight def BlackFloat       guibg=black ctermbg=black
     highlight def BlackFloatBorder guibg=black ctermbg=black
 
+    if get(g:, 'colors_name', '') == 'default'
+        return
+    endif
+
     highlight! link InactiveNormal CursorLine
 endfunction
 

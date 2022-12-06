@@ -23,6 +23,13 @@ function M.find_dotfiles()
     })
 end
 
+function M.find_personal()
+    M.find_files({
+        prompt_title = "Personal",
+        cwd = "~/personal",
+    })
+end
+
 function M.find_runtime()
     local runtime_dirs = vim.api.nvim_get_runtime_file("", true)
     builtin.find_files(themes.get_ivy({
@@ -50,6 +57,7 @@ local function setup_keymaps()
     nnoremap('<C-p>', '<Cmd>lua require("7h3f0x.telescope").find_files()<CR>')
     nnoremap('<leader>ff', '<Cmd>lua require("telescope.builtin").find_files()<CR>')
     nnoremap('<leader>fd', '<Cmd>lua require("7h3f0x.telescope").find_dotfiles()<CR>')
+    nnoremap('<leader>fp', '<Cmd>lua require("7h3f0x.telescope").find_personal()<CR>')
     nnoremap('<leader>fr', '<Cmd>lua require("7h3f0x.telescope").find_runtime()<CR>')
     nnoremap('<leader>ht', '<Cmd>lua require("telescope.builtin").help_tags()<CR>')
 end

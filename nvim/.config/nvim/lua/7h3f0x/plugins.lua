@@ -26,18 +26,10 @@ return packer.startup({ function(use)
         'folke/tokyonight.nvim',
         -- `0` not supported for `nvim_set_hl` in nvim-0.6
         commit = 'a3b558b552a7cc932f92328a5fe053711155e242',
-        cond = load_heavy,
-        config = function()
-            vim.cmd([[colorscheme tokyonight-night]])
-            local util = require("tokyonight.util")
-            local theme = require("lualine.themes.tokyonight")
-            util.highlight('User1', theme.normal.a)
-            util.highlight('User2', theme.insert.a)
-            util.highlight('User3', theme.visual.a)
-            util.highlight('User4', theme.replace.a)
-            util.highlight('User5', theme.command.a)
-            util.highlight('User6', theme.normal.b)
-        end,
+    })
+
+    use({
+        'martinsione/darkplus.nvim',
     })
 
     use({

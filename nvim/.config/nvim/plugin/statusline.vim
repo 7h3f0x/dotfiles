@@ -14,12 +14,4 @@ let g:statusline_components = {
             \}
 
 set noshowmode
-set statusline=%!th3f0x#statusline#statusline(1)
-
-augroup statusline_active
-    autocmd!
-    autocmd WinEnter * setlocal statusline=%!th3f0x#statusline#statusline(1)
-    autocmd WinLeave * setlocal statusline=%!th3f0x#statusline#statusline(0)
-    autocmd FileType qf setlocal statusline=%!th3f0x#statusline#statusline(1)
-augroup END
-
+set statusline=%!th3f0x#statusline#statusline()

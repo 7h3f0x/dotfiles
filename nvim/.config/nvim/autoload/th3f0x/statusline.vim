@@ -140,14 +140,15 @@ let s:component_map = {
             \ 'lsp': function('s:component_lsp')
             \}
 
-function th3f0x#statusline#statusline(is_active)
+function th3f0x#statusline#statusline()
+    let l:is_active = g:statusline_winid == win_getid()
     let statusline = ''
 
-    let active = a:is_active ? "active" : "inactive"
+    let active = l:is_active ? "active" : "inactive"
 
     let components = g:statusline_components[active]
     let component_separator = g:statusline_components['separator']
-    let l:left = map(copy(components.left), {_, val -> s:component_map[val](a:is_active)})
+    let l:left = map(copy(components.left), {_, val -> s:component_map[val](l:is_active)})
     call filter(l:left, {_, val -> val != ''})
 
     let statusline .= join(l:left, l:component_separator.left)
@@ -155,7 +156,7 @@ function th3f0x#statusline#statusline(is_active)
     " Section Separation
     let statusline .= "%="
 
-    let l:right = map(copy(components.right), {_, val -> s:component_map[val](a:is_active)})
+    let l:right = map(copy(components.right), {_, val -> s:component_map[val](l:is_active)})
     call filter(l:right, {_, val -> val != ''})
 
     let statusline .= join(l:right, l:component_separator.right)

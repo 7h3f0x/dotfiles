@@ -10,6 +10,16 @@ local servers = {
 
 local has_lsp_status, lsp_status = pcall(require, "lsp-status")
 
+function M.toggle_diagnostics()
+    if vim.b.show_diagnostics then
+        vim.diagnostic.hide()
+        vim.b.show_diagnostics = false
+    else
+        vim.diagnostic.show()
+        vim.b.show_diagnostics = true
+    end
+end
+
 function M.on_attach(client, bufnr)
 
     if has_lsp_status then
@@ -55,6 +65,9 @@ function M.on_attach(client, bufnr)
     if client.server_capabilities.documentRangeFormattingProvider then
         vim.api.nvim_buf_set_option(bufnr, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
     end
+
+    vim.b[bufnr].show_diagnostics = true
+    vim.cmd([[command! -buffer LspToggleDiagnostics lua require("7h3f0x.lspconfig").toggle_diagnostics()]])
 
     if client.server_capabilities.documentHighlightProvider then
         vim.cmd([[
