@@ -1,0 +1,10 @@
+define init-gef
+source ~/tools/gef/gef.py
+set history filename ~/.config/gdb/.gdb_history
+end
+document init-gef
+Initializes GEF (GDB Enhanced Features)
+end
+
+set output-radix 16
+set history filename ~/.config/gdb/.gdb_history

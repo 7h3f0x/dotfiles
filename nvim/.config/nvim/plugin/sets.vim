@@ -33,6 +33,7 @@ set inccommand=split
 " Insert-Mode cursor should have white color always
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25-iCursor,r-cr-o:hor20
 
+set foldlevel=99
 set foldlevelstart=99
 
 set backupcopy=yes

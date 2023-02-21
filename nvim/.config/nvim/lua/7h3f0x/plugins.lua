@@ -67,6 +67,7 @@ return packer.startup({ function(use)
         requires = {
             {
                 'j-hui/fidget.nvim',
+                commit = '2cf9997d3bde2323a1a0934826ec553423005a26',
                 config = function()
                     require('fidget').setup({
                         text = {
@@ -144,6 +145,7 @@ return packer.startup({ function(use)
             {'nvim-lua/plenary.nvim'},
             {
                 'kyazdani42/nvim-web-devicons',
+                commit = '9061e2d355ecaa2b588b71a35e7a11358a7e51e1',
                 config = function()
                     require('nvim-web-devicons').setup({})
                 end,
@@ -166,11 +168,6 @@ return packer.startup({ function(use)
     use({
         'lewis6991/impatient.nvim',
         tag = 'v0.2',
-    })
-
-    use({
-        'dstein64/vim-startuptime',
-        cmd = {'StartupTime'},
     })
 
 end, config = {
